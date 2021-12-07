@@ -1,6 +1,9 @@
 package programa;
 
 import entities.Funcionario;
+import services.DezOuVintePorCento;
+import services.QuinzeOuVintePorCento;
+
 import static enums.CargoEnum.*;
 
 public class CalculadoraDeSalario {
@@ -12,31 +15,18 @@ public class CalculadoraDeSalario {
 		Funcionario dba = new Funcionario("Menino do Teste", 20, 4500.0, DBA);
 		
 		calcula(programador);
+		calcula(teste);
+		calcula(dba);
 	}
 	
 	public static double calcula(Funcionario funcionario) {
 		if(PROGRAMADOR.equals(funcionario.getCargo())) {
-			return dezOuVintePorcento(funcionario);
+			return new DezOuVintePorCento().calculoBase(funcionario);
 		}
 		
-		if(TESTE.equals(funcionario.getCargo())) {
-			return quinzeOuVintePorCento(funcionario);
+		if(TESTE.equals(funcionario.getCargo()) || DBA.equals(funcionario.getCargo())) {
+			return new QuinzeOuVintePorCento().calculoBase(funcionario);
 		}
 		throw new RuntimeException("funcionario invalido");
 	}
-
-	private static double quinzeOuVintePorCento(Funcionario funcionario) {
-		if(funcionario.getSalarioBase() > 3000.0) {
-			return funcionario.getSalarioBase() * 0.15;
-		}
-		return funcionario.getSalarioBase() * 0.20;
-	}
-
-	private static double dezOuVintePorcento(Funcionario funcionario) {
-		if(funcionario.getSalarioBase() > 3000.0) {
-			return funcionario.getSalarioBase() * 0.10;
-		}
-		return funcionario.getSalarioBase() * 0.20;
-	}
-
 }

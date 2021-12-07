@@ -1,0 +1,17 @@
+package services;
+
+import entities.Funcionario;
+import entities.impl.CalcularSalarioClient;
+
+public class DezOuVintePorCento implements CalcularSalarioClient{
+
+	@Override
+	public double calculoBase(Funcionario funcionario) {
+		
+		if(funcionario.getSalarioBase() > 3000.0) {
+			return funcionario.getSalarioBase() * 0.10;
+		}
+		return funcionario.getSalarioBase() * 0.20;
+	}
+
+}
